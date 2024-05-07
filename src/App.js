@@ -1,24 +1,93 @@
-import logo from './logo.svg';
+// import { Provider } from 'react-redux';
+// import './App.css';
+// import Body from './components/Body';
+// import Header from './components/Header';
+// import store from './utils/store';
+// import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+// import MainContainer from "./components/MainContainer";
+// import VideoWatch from './components/VideoWatch';
+// import React from 'react'
+
+// const createContext
+
+// const appRouter = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Body />,
+//     children: [
+//       {
+//         path: "/",
+//         element: <MainContainer />,
+//       },
+//       {
+//         path: "watch",
+//         element: <VideoWatch />,
+//       }
+//     ]
+//   }
+// ])
+
+// function App() {
+//   return (
+//     <Provider store={store}>
+//       <div>
+//         <Header />
+      
+//         <RouterProvider router={appRouter} />
+
+//       </div>
+//     </Provider>
+//   );
+// }
+
+// export default App;
+
+// *****************************************************************************************************************************
+
+import { Provider } from 'react-redux';
 import './App.css';
+import Body from './components/Body';
+import Header from './components/Header';
+import store from './utils/store';
+import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+import MainContainer from "./components/MainContainer";
+import VideoWatch from './components/VideoWatch';
+import React, { createContext, useState } from 'react'
+
+ export const MyContext = createContext();
+
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Body />,
+    children: [
+      {
+        path: "/",
+        element: <MainContainer />,
+      },
+      {
+        path: "watch",
+        element: <VideoWatch />,
+      }
+    ]
+  }
+])
 
 function App() {
+
+  const [filter, setfilter] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MyContext.Provider value={{filter , setfilter}}>
+    <Provider store={store}>
+      <div>
+        <Header />
+      
+        <RouterProvider router={appRouter} />
+
+      </div>
+    </Provider>
+    </MyContext.Provider>
   );
 }
 
